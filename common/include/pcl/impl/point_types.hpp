@@ -1264,7 +1264,7 @@ namespace pcl
   struct PFHSignature125
   {
     float histogram[125] = {0.f};
-    static int descriptorSize () { return 125; }
+    static constexpr int descriptorSize () { return 125; }
 
     inline constexpr PFHSignature125 () = default;
 
@@ -1278,7 +1278,7 @@ namespace pcl
   struct PFHRGBSignature250
   {
     float histogram[250] = {0.f};
-    static int descriptorSize () { return 250; }
+    static constexpr int descriptorSize () { return 250; }
 
     inline constexpr PFHRGBSignature250 () = default;
 
@@ -1365,7 +1365,7 @@ namespace pcl
   {
     float descriptor[1980] = {0.f};
     float rf[9] = {0.f};
-    static int descriptorSize () { return 1980; }
+    static constexpr int descriptorSize () { return 1980; }
 
     inline constexpr ShapeContext1980 () = default;
 
@@ -1380,7 +1380,7 @@ namespace pcl
   {
     float descriptor[1960] = {0.f};
     float rf[9] = {0.f};
-    static int descriptorSize () { return 1960; }
+    static constexpr int descriptorSize () { return 1960; }
 
     inline constexpr UniqueShapeContext1960 () = default;
 
@@ -1395,7 +1395,7 @@ namespace pcl
   {
     float descriptor[352] = {0.f};
     float rf[9] = {0.f};
-    static int descriptorSize () { return 352; }
+    static constexpr int descriptorSize () { return 352; }
 
     inline constexpr SHOT352 () = default;
 
@@ -1411,7 +1411,7 @@ namespace pcl
   {
     float descriptor[1344] = {0.f};
     float rf[9] = {0.f};
-    static int descriptorSize () { return 1344; }
+    static constexpr int descriptorSize () { return 1344; }
 
     inline constexpr SHOT1344 () = default;
 
@@ -1476,7 +1476,7 @@ namespace pcl
   struct FPFHSignature33
   {
     float histogram[33] = {0.f};
-    static int descriptorSize () { return 33; }
+    static constexpr int descriptorSize () { return 33; }
 
     inline constexpr FPFHSignature33 () = default;
 
@@ -1490,7 +1490,7 @@ namespace pcl
   struct VFHSignature308
   {
     float histogram[308] = {0.f};
-    static int descriptorSize () { return 308; }
+    static constexpr int descriptorSize () { return 308; }
 
     inline constexpr VFHSignature308 () = default;
 
@@ -1504,7 +1504,7 @@ namespace pcl
   struct GRSDSignature21
   {
     float histogram[21] = {0.f};
-    static int descriptorSize () { return 21; }
+    static constexpr int descriptorSize () { return 21; }
 
     inline constexpr GRSDSignature21 () = default;
 
@@ -1520,7 +1520,7 @@ namespace pcl
     float scale = 0.f;
     float orientation = 0.f;
     unsigned char descriptor[64] = {0};
-    static int descriptorSize () { return 64; }
+    static constexpr int descriptorSize () { return 64; }
 
     inline constexpr BRISKSignature512 () = default;
 
@@ -1536,7 +1536,7 @@ namespace pcl
   struct ESFSignature640
   {
     float histogram[640] = {0.f};
-    static int descriptorSize () { return 640; }
+    static constexpr int descriptorSize () { return 640; }
 
     inline constexpr ESFSignature640 () = default;
 
@@ -1550,7 +1550,7 @@ namespace pcl
   struct GASDSignature512
   {
     float histogram[512] = {0.f};
-    static int descriptorSize() { return 512; }
+    static constexpr int descriptorSize() { return 512; }
 
     inline constexpr GASDSignature512 () = default;
 
@@ -1564,7 +1564,7 @@ namespace pcl
   struct GASDSignature984
   {
     float histogram[984] = {0.f};
-    static int descriptorSize() { return 984; }
+    static constexpr int descriptorSize() { return 984; }
 
     inline constexpr GASDSignature984 () = default;
 
@@ -1578,7 +1578,7 @@ namespace pcl
   struct GASDSignature7992
   {
     float histogram[7992] = {0.f};
-    static int descriptorSize() { return 7992; }
+    static constexpr int descriptorSize() { return 7992; }
 
     inline constexpr GASDSignature7992 () = default;
 
@@ -1592,7 +1592,7 @@ namespace pcl
   struct GFPFHSignature16
   {
     float histogram[16] = {0.f};
-    static int descriptorSize () { return 16; }
+    static constexpr int descriptorSize () { return 16; }
 
     inline constexpr GFPFHSignature16 () = default;
 
@@ -1607,7 +1607,7 @@ namespace pcl
   {
     float x = 0.f, y = 0.f, z = 0.f, roll = 0.f, pitch = 0.f, yaw = 0.f;
     float descriptor[36] = {0.f};
-    static int descriptorSize () { return 36; }
+    static constexpr int descriptorSize () { return 36; }
 
     inline constexpr Narf36 () = default;
 
@@ -1669,7 +1669,7 @@ namespace pcl
   struct Histogram
   {
     float histogram[N];
-    static int descriptorSize () { return N; }
+    static constexpr int descriptorSize () { return N; }
   };
 
   struct EIGEN_ALIGN16 _PointWithScale
@@ -1759,15 +1759,14 @@ namespace pcl
       curvature = p.curvature;
     }
 
-    inline constexpr PointSurfel ()
-    {
-      x = y = z = 0.0f;
-      data[3] = 1.0f;
-      normal_x = normal_y = normal_z = data_n[3] = 0.0f;
-      r = g = b = 0;
-      a = 255;
-      radius = confidence = curvature = 0.0f;
-    }
+    inline constexpr PointSurfel () :
+      x{}, y{}, z{},
+      data{ {},{},{}, 1.0f },
+      normal_x{}, normal_y{}, normal_z{}, data_n{{}},
+      r{}, g{}, b{},
+      a{255},
+      radius{}, confidence{}, curvature{}
+    {}
 
     // TODO: add other ctor to PointSurfel
 
