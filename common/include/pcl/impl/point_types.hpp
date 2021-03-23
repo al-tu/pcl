@@ -1760,12 +1760,12 @@ namespace pcl
     }
 
     inline constexpr PointSurfel () :
-      x{}, y{}, z{},
-      data{ {},{},{}, 1.0f },
-      normal_x{}, normal_y{}, normal_z{}, data_n{{}},
-      r{}, g{}, b{},
-      a{255},
-      radius{}, confidence{}, curvature{}
+      x {}, y {}, z {},
+      data { {},{},{}, 1.0f },
+      normal_x {}, normal_y {}, normal_z {}, data_n { {} },
+      r {}, g {}, b {},
+      a {255},
+      radius {}, confidence {}, curvature {}
     {}
 
     // TODO: add other ctor to PointSurfel
