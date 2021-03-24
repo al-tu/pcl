@@ -1759,7 +1759,7 @@ namespace pcl
       curvature = p.curvature;
     }
 
-    inline constexpr PointSurfel () :
+    inline constexpr PointSurfel ()
     {
       //defaultInitialize<PointXYZ>();
       //defaultInitialize<Normal>();
