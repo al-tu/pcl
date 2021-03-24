@@ -1761,9 +1761,12 @@ namespace pcl
 
     inline constexpr PointSurfel () :
     {
+      //defaultInitialize<PointXYZ>();
+      //defaultInitialize<Normal>();
+      //defaultInitialize<PointRGBA>();
       x = y = z = 0.0f;
-      data[3] = 1.0f;
-      normal_x = normal_y = normal_z = data_n[3] = 0.0f;
+      //data[3] = 1.0f;
+      normal_x = normal_y = normal_z /*= data_n[3]*/ = 0.0f;
       r = g = b = 0;
       a = 255;
       radius = confidence = curvature = 0.0f;

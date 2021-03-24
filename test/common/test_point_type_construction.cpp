@@ -44,11 +44,67 @@
 using namespace pcl;
 using namespace pcl::test;
 
-TEST (PointTypeConstruction, PointXYZConstruction)
+static constexpr const std::uint8_t uint8_0{};
+static constexpr const std::uint8_t uint8_255{};
+static constexpr const float float_0{};
+static constexpr const float float_1{1.0f};
+
+TEST (PointTypeConstruction, PointXYZDefaultConstruction)
 {
-  constexpr const pcl::RGB rgba{ 0, 0, 0 };
-  static_assert(rgba.r == std::uint8_t{0} && rgba.g == std::uint8_t{0} && rgba.b == std::uint8_t{0} && rgba.a == std::uint8_t{255});
+  constexpr const pcl::PointXYZ pt;
+  static_assert(pt.x == float_0);
+  static_assert(pt.y == float_0);
+  static_assert(pt.z == float_0);
 }
+
+TEST (PointTypeConstruction, PointXYZThreeScalarsConstruction)
+{
+  constexpr const pcl::PointXYZ pt(float_1, float_1, float_1);
+  static_assert(pt.x == float_1);
+  static_assert(pt.y == float_1);
+  static_assert(pt.z == float_1);
+
+  //constexpr const auto vec4fmap { pt.getVector4fMap() };
+  //static_assert(vec4fmap(3) == float_1);
+}
+
+/*namespace
+{
+
+// TODO make checks helpers for 
+//      1. default ctor checks 
+//      2. ctor with params checks
+
+template <typename PointT>
+constexpr auto is_xyz_default_constructed(PointT &&pt)
+{
+  return pt.x == float_0 && pt.y == float_0 && pt.z == float_0;
+}
+
+}*/
+
+// TODO dont use == with floats
+TEST (PointTypeConstruction, PointSurfelDefaultConstruction)
+{
+  constexpr const pcl::PointSurfel pt;
+  static_assert(pt.x == float_0);
+  static_assert(pt.y == float_0);
+  static_assert(pt.z == float_0);
+
+  static_assert(pt.normal_x == float_0);
+  static_assert(pt.normal_y == float_0);
+  static_assert(pt.normal_z == float_0);
+
+  static_assert(pt.r == uint8_0);
+  static_assert(pt.g == uint8_0);
+  static_assert(pt.b == uint8_0);
+  static_assert(pt.a == uint8_255);
+
+  static_assert(pt.radius == float_0);
+  static_assert(pt.confidence == float_0);
+  static_assert(pt.curvature == float_0);
+}
+
 
 int
 main (int argc, char** argv)
