@@ -4,7 +4,7 @@ set(SUBSYS_DEPS common search kdtree octree)
 
 set(build TRUE)
 PCL_SUBSYS_OPTION(build "${SUBSYS_NAME}" "${SUBSYS_DESC}" ON)
-PCL_SUBSYS_DEPEND(build "${SUBSYS_NAME}" DEPS ${SUBSYS_DEPS} EXT_DEPS vtk OPT_DEPS qhull)
+PCL_SUBSYS_DEPEND(build "${SUBSYS_NAME}" DEPS ${SUBSYS_DEPS} OPT_DEPS qhull vtk)
 
 PCL_ADD_DOC("${SUBSYS_NAME}")
 
@@ -193,5 +193,5 @@ if(VTK_FOUND AND NOT ANDROID)
 endif()
 
 if(WIN32)
-  target_link_libraries("${LIB_NAME}" Rpcrt4.lib)
+  target_link_libraries("${LIB_NAME}" rpcrt4.lib)
 endif()
