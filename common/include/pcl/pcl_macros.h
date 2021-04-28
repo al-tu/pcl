@@ -438,3 +438,8 @@ aligned_free (void* ptr)
 #else
   #define PCL_NODISCARD
 #endif
+
+// put 'real' conditions here for compilers that happen to work well with union issues 
+#if (__cplusplus >= 201703L)
+  #define PCL_CONSTEXPR_CTOR constexpr
+#endif
