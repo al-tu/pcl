@@ -30,7 +30,7 @@ if(Boost_SERIALIZATION_FOUND)
 endif()
 
 # Required boost modules
-set(BOOST_REQUIRED_MODULES filesystem date_time iostreams system mpl)
+set(BOOST_REQUIRED_MODULES filesystem date_time iostreams system mpl11)
 find_package(Boost 1.65.0 REQUIRED COMPONENTS ${BOOST_REQUIRED_MODULES})
 
 if(Boost_FOUND)
