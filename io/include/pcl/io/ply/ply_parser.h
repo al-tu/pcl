@@ -44,17 +44,18 @@
 #include <pcl/io/ply/io_operators.h>
 #include <pcl/pcl_macros.h>
 
-#include <istream>
-#include <memory>
-#include <string>
-#include <tuple>
-//#include <vector>
 #include <boost/lexical_cast.hpp> // for lexical_cast
 #include <boost/mpl/inherit.hpp> // for inherit
 #include <boost/mpl/inherit_linearly.hpp> // inherit_linearly
 #include <boost/mpl/joint_view.hpp> // for joint_view
 #include <boost/mpl/transform.hpp> // for transform
 #include <boost/mpl/vector.hpp>
+
+#include <istream>
+#include <memory>
+#include <string>
+#include <tuple>
+#include <vector>
 
 namespace pcl
 {
