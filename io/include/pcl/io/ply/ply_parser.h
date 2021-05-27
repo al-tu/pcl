@@ -48,7 +48,7 @@
 #include <memory>
 #include <string>
 #include <tuple>
-#include <vector>
+//#include <vector>
 #include <boost/lexical_cast.hpp> // for lexical_cast
 #include <boost/mpl/inherit.hpp> // for inherit
 #include <boost/mpl/inherit_linearly.hpp> // inherit_linearly
