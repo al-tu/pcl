@@ -38,8 +38,10 @@
 #include <pcl/io/obj_io.h>
 #include <fstream>
 #include <pcl/common/io.h>
-#include <pcl/io/boost.h>
 #include <pcl/console/time.h>
+#include <boost/lexical_cast.hpp> // for lexical_cast
+#include <boost/filesystem.hpp> // for exists
+#include <boost/algorithm/string.hpp> // for split
 
 pcl::MTLReader::MTLReader ()
 {
@@ -536,8 +538,8 @@ pcl::OBJReader::read (const std::string &file_name, pcl::PCLPointCloud2 &cloud,
   std::vector<std::string> st;
   try
   {
-    index_t point_idx = 0;
-    index_t normal_idx = 0;
+    uindex_t point_idx = 0;
+    uindex_t normal_idx = 0;
 
     while (!fs.eof ())
     {

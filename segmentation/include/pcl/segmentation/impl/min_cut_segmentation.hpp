@@ -39,7 +39,7 @@
 #ifndef PCL_SEGMENTATION_MIN_CUT_SEGMENTATION_HPP_
 #define PCL_SEGMENTATION_MIN_CUT_SEGMENTATION_HPP_
 
-#include <pcl/segmentation/boost.h>
+#include <boost/graph/boykov_kolmogorov_max_flow.hpp> // for boykov_kolmogorov_max_flow
 #include <pcl/segmentation/min_cut_segmentation.h>
 #include <pcl/search/search.h>
 #include <pcl/search/kdtree.h>
@@ -342,7 +342,7 @@ pcl::MinCutSegmentation<PointT>::buildGraph ()
     addEdge (point_index, static_cast<int> (sink_), sink_weight);
   }
 
-  std::vector<int> neighbours;
+  pcl::Indices neighbours;
   std::vector<float> distances;
   search_->setInputCloud (input_, indices_);
   for (std::size_t i_point = 0; i_point < number_of_indices; i_point++)
