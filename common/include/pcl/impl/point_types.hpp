@@ -68,6 +68,7 @@
   (pcl::PointXYZRGBA)           \
   (pcl::PointXYZRGB)            \
   (pcl::PointXYZRGBL)           \
+  (pcl::PointXYZLAB)            \
   (pcl::PointXYZHSV)            \
   (pcl::PointXY)                \
   (pcl::InterestPoint)          \
@@ -125,6 +126,7 @@
   (pcl::PointXYZRGBA)         \
   (pcl::PointXYZRGB)          \
   (pcl::PointXYZRGBL)         \
+  (pcl::PointXYZLAB)          \
   (pcl::PointXYZHSV)          \
   (pcl::InterestPoint)        \
   (pcl::PointNormal)          \
@@ -686,6 +688,47 @@ namespace pcl
     }
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGBL& p);
+    PCL_MAKE_ALIGNED_OPERATOR_NEW
+  };
+
+
+  struct EIGEN_ALIGN16 _PointXYZLAB
+  {
+    PCL_ADD_POINT4D; // this adds the members x,y,z
+    union
+    {
+      struct
+      {
+        float L;
+        float a;
+        float b;
+      };
+      float data_lab[4];
+    };
+    PCL_MAKE_ALIGNED_OPERATOR_NEW
+  };
+
+  PCL_EXPORTS std::ostream& operator << (std::ostream& os, const PointXYZLAB& p);
+  /** \brief A point structure representing Euclidean xyz coordinates, and the CIELAB color.
+    * \ingroup common
+  */
+  struct PointXYZLAB : public _PointXYZLAB
+  {
+    inline PointXYZLAB (const _PointXYZLAB &p)
+    {
+      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
+      L = p.L; a = p.a; b = p.b;
+    }
+
+    inline PointXYZLAB()
+    {
+      x = y = z = 0.0f;
+      data[3] = 1.0f; // important for homogeneous coordinates
+      L = a = b = 0.0f;
+      data_lab[3] = 0.0f;
+    }
+
+    friend std::ostream& operator << (std::ostream& os, const PointXYZLAB& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
   };
 
@@ -1821,7 +1864,7 @@ namespace pcl
   operator << (std::ostream& os, const Histogram<N>& p)
   {
     // make constexpr
-    if (N > 0)
+    PCL_IF_CONSTEXPR(N > 0)
     {
         os << "(" << p.histogram[0];
         std::for_each(p.histogram + 1, std::end(p.histogram),
@@ -1884,6 +1927,16 @@ POINT_CLOUD_REGISTER_POINT_STRUCT (pcl::_PointXYZRGBL,
     (std::uint32_t, label, label)
 )
 POINT_CLOUD_REGISTER_POINT_WRAPPER(pcl::PointXYZRGBL, pcl::_PointXYZRGBL)
+
+POINT_CLOUD_REGISTER_POINT_STRUCT (pcl::_PointXYZLAB,
+    (float, x, x)
+    (float, y, y)
+    (float, z, z)
+    (float, L, L)
+    (float, a, a)
+    (float, b, b)
+)
+POINT_CLOUD_REGISTER_POINT_WRAPPER(pcl::PointXYZLAB, pcl::_PointXYZLAB)
 
 POINT_CLOUD_REGISTER_POINT_STRUCT (pcl::_PointXYZHSV,
     (float, x, x)
