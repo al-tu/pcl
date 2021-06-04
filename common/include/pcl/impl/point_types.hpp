@@ -365,7 +365,7 @@ namespace pcl
   {
     inline constexpr Intensity (const _Intensity &p) : Intensity{p.intensity} {}
 
-    inline constexpr Intensity (float _intensity = 0.f) : intensity{_intensity} {}
+    inline constexpr Intensity (float _intensity = 0.f) : _Intensity{_intensity} {}
 
     friend std::ostream& operator << (std::ostream& os, const Intensity& p);
   };
