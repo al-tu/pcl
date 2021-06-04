@@ -305,7 +305,7 @@ namespace pcl
 
     inline constexpr PointXYZ (): PointXYZ(0.f, 0.f, 0.f) {}
 
-    inline constexpr PointXYZ (float _x, float _y, float _z) : _PointXYZ{_x, _y, _z, 1.f} {}
+    inline constexpr PointXYZ (float _x, float _y, float _z) : _PointXYZ{{_x, _y, _z, 1.f}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZ& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -342,15 +342,11 @@ namespace pcl
     */
   struct RGB: public _RGB
   {
-    inline constexpr RGB (const _RGB &p)
-    // : r{p.r}, g{p.g}, b{p.b}, a{p.a} {}
-    {
-        rgba = p.rgba;
-    }
+    inline constexpr RGB (const _RGB &p) : RGB{p.r, p.g, p.b, p.a} {}
 
     inline constexpr RGB (): RGB(0, 0, 0) {}
 
-    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b) : _RGB{_b, _g, _r, 255} {}
+    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a = 255) : _RGB{_b, _g, _r, _a} {}
 
     friend std::ostream& operator << (std::ostream& os, const RGB& p);
   };
