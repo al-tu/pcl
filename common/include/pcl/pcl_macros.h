@@ -444,9 +444,13 @@ aligned_free(void* ptr)
 #endif
 
 // put 'real' conditions here for compilers that happen to work well with union issues 
-#if (__cplusplus >= 201703L)
-  #define PCL_CONSTEXPR_CTOR constexpr
-#endif
+//#if (__cplusplus >= 201703L)
+//  #define PCL_MAYBE_CONSTEXPR_CTOR constexpr
+//#else
+//  #define PCL_MAYBE_CONSTEXPR_CTOR 
+//#endif
+#define PCL_MAYBE_CONSTEXPR_CTOR 
+
 
 #ifdef __cpp_if_constexpr
   #define PCL_IF_CONSTEXPR(x) if constexpr(x)
