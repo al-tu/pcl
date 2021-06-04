@@ -350,7 +350,7 @@ namespace pcl
 
     inline constexpr RGB (): RGB(0, 0, 0) {}
 
-    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b) : _RGB{_r, _g, _b, 255} {}
+    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b) : _RGB{_b, _g, _r, 255} {}
 
     friend std::ostream& operator << (std::ostream& os, const RGB& p);
   };
