@@ -383,18 +383,12 @@ namespace pcl
     */
   struct Intensity8u: public _Intensity8u
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR Intensity8u (const _Intensity8u &p)
-    {
-      intensity = p.intensity;
-    }
+    inline constexpr Intensity8u (const _Intensity8u &p) : Intensity8u{p.intensity} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Intensity8u (std::uint8_t _intensity = 0)
-    {
-      intensity = _intensity;
-    }
+    inline constexpr Intensity8u (std::uint8_t _intensity = 0) : _Intensity8u{_intensity} {}
 
 #if defined(_LIBCPP_VERSION) && _LIBCPP_VERSION <= 1101
-    operator unsigned char() const
+    inline constexpr operator unsigned char() const
     {
       return intensity;
     }
@@ -415,15 +409,9 @@ namespace pcl
     */
   struct Intensity32u: public _Intensity32u
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR Intensity32u (const _Intensity32u &p)
-    {
-      intensity = p.intensity;
-    }
+    inline constexpr Intensity32u (const _Intensity32u &p) : Intensity32u{p.intensity} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Intensity32u (std::uint32_t _intensity = 0)
-    {
-      intensity = _intensity;
-    }
+    inline constexpr Intensity32u (std::uint32_t _intensity = 0) : _Intensity32u{_intensity} {}
 
     friend std::ostream& operator << (std::ostream& os, const Intensity32u& p);
   };
@@ -449,21 +437,11 @@ namespace pcl
   struct PointXYZI : public _PointXYZI
   {
     inline constexpr PointXYZI (const _PointXYZI &p) : _PointXYZI{{p.x, p.y, p.z, 1.0f}, p.intensity} {}
-    /*{
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      intensity = p.intensity;
-    }*/
 
     inline constexpr PointXYZI (float _intensity = 0.f) : PointXYZI(0.f, 0.f, 0.f, _intensity) {}
 
-    //inline constexpr PointXYZI (float _x, float _y, float _z, float _intensity = 0.f) : _PointXYZI{{_x, _y, _z, 1.0f}, _intensity} {}
     inline constexpr PointXYZI (float _x, float _y, float _z, float _intensity = 0.f) : _PointXYZI{{_x, _y, _z, 1.0f}, _intensity} {}
-    /*{
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      intensity = _intensity;
-    }*/
-
+    
     friend std::ostream& operator << (std::ostream& os, const PointXYZI& p);
   };
 
@@ -478,20 +456,11 @@ namespace pcl
   PCL_EXPORTS std::ostream& operator << (std::ostream& os, const PointXYZL& p);
   struct PointXYZL : public _PointXYZL
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZL (const _PointXYZL &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      label = p.label;
-    }
+    inline constexpr PointXYZL (const _PointXYZL &p) : _PointXYZL{{p.x, p.y, p.z, 1.0f}, p.label} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZL (std::uint32_t _label = 0): PointXYZL(0.f, 0.f, 0.f, _label) {}
+    inline constexpr PointXYZL (std::uint32_t _label = 0) : PointXYZL(0.f, 0.f, 0.f, _label) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZL (float _x, float _y, float _z, std::uint32_t _label = 0)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      label = _label;
-    }
+    inline constexpr PointXYZL (float _x, float _y, float _z, std::uint32_t _label = 0) : _PointXYZL{{.data = {_x, _y, _z, 1.0f}}, label = _label} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZL& p);
   };
@@ -502,7 +471,7 @@ namespace pcl
   {
     std::uint32_t label = 0;
 
-    Label (std::uint32_t _label = 0): label(_label) {}
+    inline constexpr Label (std::uint32_t _label = 0): label(_label) {}
 
     friend std::ostream& operator << (std::ostream& os, const Label& p);
   };
@@ -538,27 +507,18 @@ namespace pcl
     */
   struct EIGEN_ALIGN16 PointXYZRGBA : public _PointXYZRGBA
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBA (const _PointXYZRGBA &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      rgba = p.rgba;
-    }
+    inline constexpr PointXYZRGBA (const _PointXYZRGBA &p) : PointXYZRGBA{p.x, p.y, p.z, p.r, p.g, p.b, p.a} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBA (): PointXYZRGBA (0, 0, 0, 0) {}
+    inline constexpr PointXYZRGBA (): PointXYZRGBA (0, 0, 0, 0) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBA (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a):
+    inline constexpr PointXYZRGBA (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a):
       PointXYZRGBA (0.f, 0.f, 0.f, _r, _g, _b, _a) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBA (float _x, float _y, float _z):
+    inline constexpr PointXYZRGBA (float _x, float _y, float _z) :
       PointXYZRGBA (_x, _y, _z, 0, 0, 0, 0) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBA (float _x, float _y, float _z, std::uint8_t _r,
-                         std::uint8_t _g, std::uint8_t _b, std::uint8_t _a)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      r = _r; g = _g; b = _b; a = _a;
-    }
+    inline constexpr PointXYZRGBA (float _x, float _y, float _z, std::uint8_t _r,
+                         std::uint8_t _g, std::uint8_t _b, std::uint8_t _a) : _PointXYZRGBA{{_x, _y, _z, 1.0f}, {_b, _g, _r, _a}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGBA& p);
   };
@@ -613,28 +573,19 @@ namespace pcl
     */
   struct EIGEN_ALIGN16 PointXYZRGB : public _PointXYZRGB
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGB (const _PointXYZRGB &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      rgb = p.rgb;
-    }
+    inline constexpr PointXYZRGB (const _PointXYZRGB &p) : PointXYZRGB{p.x, p.y, p.z, p.r, p.g, p.b} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGB (): PointXYZRGB (0.f, 0.f, 0.f) {}
+    inline constexpr PointXYZRGB (): PointXYZRGB (0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
+    inline constexpr PointXYZRGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
       PointXYZRGB (0.f, 0.f, 0.f, _r, _g, _b) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGB (float _x, float _y, float _z):
+    inline constexpr PointXYZRGB (float _x, float _y, float _z):
       PointXYZRGB (_x, _y, _z, 0, 0, 0) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGB (float _x, float _y, float _z,
-                         std::uint8_t _r, std::uint8_t _g, std::uint8_t _b)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      r = _r; g = _g; b = _b;
-      a = 255;
-    }
+    inline constexpr PointXYZRGB (float _x, float _y, float _z,
+                         std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
+      _PointXYZRGB{{_x, _y, _z, 1.0f}, {_b, _g, _r, 255}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGB& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -644,32 +595,21 @@ namespace pcl
   PCL_EXPORTS std::ostream& operator << (std::ostream& os, const PointXYZRGBL& p);
   struct EIGEN_ALIGN16 PointXYZRGBL : public _PointXYZRGBL
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBL (const _PointXYZRGBL &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      rgba = p.rgba;
-      label = p.label;
-    }
+    inline constexpr PointXYZRGBL (const _PointXYZRGBL &p) : PointXYZRGBL{p.x, p.y, p.z, p.r, p.g, p.b, p.label} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBL (std::uint32_t _label = 0):
+    inline constexpr PointXYZRGBL (std::uint32_t _label = 0):
       PointXYZRGBL (0.f, 0.f, 0.f, 0, 0, 0, _label) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBL (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
+    inline constexpr PointXYZRGBL (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
       PointXYZRGBL (0.f, 0.f, 0.f, _r, _g, _b) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBL (float _x, float _y, float _z):
+    inline constexpr PointXYZRGBL (float _x, float _y, float _z):
       PointXYZRGBL (_x, _y, _z, 0, 0, 0) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBL (float _x, float _y, float _z,
+    inline constexpr PointXYZRGBL (float _x, float _y, float _z,
                          std::uint8_t _r, std::uint8_t _g, std::uint8_t _b,
-                         std::uint32_t _label = 0)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      r = _r; g = _g; b = _b;
-      a = 255;
-      label = _label;
-    }
+                         std::uint32_t _label = 0) :
+      _PointXYZRGBL{{_x, _y, _z, 1.0f}, {_b, _g, _r, 255}, _label} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGBL& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -698,19 +638,13 @@ namespace pcl
   */
   struct PointXYZLAB : public _PointXYZLAB
   {
-    inline PointXYZLAB (const _PointXYZLAB &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      L = p.L; a = p.a; b = p.b;
-    }
+    inline constexpr PointXYZLAB (const _PointXYZLAB &p) : PointXYZLAB{p.x, p.y, p.z, p.L, p.a, p.b} {}
 
-    inline PointXYZLAB()
-    {
-      x = y = z = 0.0f;
-      data[3] = 1.0f; // important for homogeneous coordinates
-      L = a = b = 0.0f;
-      data_lab[3] = 0.0f;
-    }
+    inline constexpr PointXYZLAB() : PointXYZLAB{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f} {}
+
+    inline constexpr PointXYZLAB (float _x, float _y, float _z,
+                        float _L, float _a, float _b) :
+      _PointXYZLAB{ {.data = {_x, _y, _z, 1.0f}}, {.data_lab = {_L, _a, _b, 0.0f}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZLAB& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -736,27 +670,19 @@ namespace pcl
   PCL_EXPORTS std::ostream& operator << (std::ostream& os, const PointXYZHSV& p);
   struct EIGEN_ALIGN16 PointXYZHSV : public _PointXYZHSV
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZHSV (const _PointXYZHSV &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      h = p.h; s = p.s; v = p.v;
-    }
+    inline constexpr PointXYZHSV (const _PointXYZHSV &p) : 
+      PointXYZHSV{p.x, p.y, p.z, p.h, p.s, p.v} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZHSV (): PointXYZHSV (0.f, 0.f, 0.f) {}
+    inline constexpr PointXYZHSV (): PointXYZHSV (0.f, 0.f, 0.f) {}
 
     // @TODO: Use strong types??
     // This is a dangerous type, doesn't behave like others
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZHSV (float _h, float _s, float _v):
+    inline constexpr PointXYZHSV (float _h, float _s, float _v):
       PointXYZHSV (0.f, 0.f, 0.f, _h, _s, _v) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZHSV (float _x, float _y, float _z,
-                        float _h, float _s, float _v)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      h = _h; s = _s; v = _v;
-      data_c[3] = 0;
-    }
+    inline constexpr PointXYZHSV (float _x, float _y, float _z,
+                        float _h, float _s, float _v) :
+      _PointXYZHSV{{.data = {_x, _y, _z, 1.0f}}, {.data_c = {_h, _s, _v, 0.0f}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZHSV& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -773,9 +699,9 @@ namespace pcl
     float x = 0.f;
     float y = 0.f;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXY() = default;
+    inline constexpr PointXY() = default;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXY(float _x, float _y): x(_x), y(_y) {}
+    inline constexpr PointXY(float _x, float _y): x(_x), y(_y) {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXY& p);
   };
@@ -790,9 +716,9 @@ namespace pcl
     float u = 0.f;
     float v = 0.f;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointUV() = default;
+    inline constexpr PointUV() = default;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointUV(float _u, float _v): u(_u), v(_v) {}
+    inline constexpr PointUV(float _u, float _v): u(_u), v(_v) {}
 
     friend std::ostream& operator << (std::ostream& os, const PointUV& p);
   };
@@ -838,21 +764,12 @@ namespace pcl
     */
   struct Normal : public _Normal
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR Normal (const _Normal &p)
-    {
-      normal_x = p.normal_x; normal_y = p.normal_y; normal_z = p.normal_z;
-      data_n[3] = 0.0f;
-      curvature = p.curvature;
-    }
+    inline constexpr Normal (const _Normal &p) : Normal {p.normal_x, p.normal_y, p.normal_z, p.curvature} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Normal (float _curvature = 0.f): Normal (0.f, 0.f, 0.f, _curvature) {}
+    inline constexpr Normal (float _curvature = 0.f): Normal (0.f, 0.f, 0.f, _curvature) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Normal (float n_x, float n_y, float n_z, float _curvature = 0.f)
-    {
-      normal_x = n_x; normal_y = n_y; normal_z = n_z;
-      data_n[3] = 0.0f;
-      curvature = _curvature;
-    }
+    inline constexpr Normal (float n_x, float n_y, float n_z, float _curvature = 0.f) :
+      _Normal{{.data_n = {n_x, n_y, n_z, 1.0f}}, {.data_c = {_curvature, 0.0f, 0.0f, 0.0f}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const Normal& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -871,19 +788,11 @@ namespace pcl
     */
   struct EIGEN_ALIGN16 Axis : public _Axis
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR Axis (const _Axis &p)
-    {
-      normal_x = p.normal_x; normal_y = p.normal_y; normal_z = p.normal_z;
-      data_n[3] = 0.0f;
-    }
+    inline constexpr Axis (const _Axis &p) : Axis{p.normal_x, p.normal_y, p.normal_z} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Axis (): Axis (0.f, 0.f, 0.f) {}
+    inline constexpr Axis (): Axis (0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Axis (float n_x, float n_y, float n_z)
-    {
-      normal_x = n_x; normal_y = n_y; normal_z = n_z;
-      data_n[3] = 0.0f;
-    }
+    inline constexpr Axis (float n_x, float n_y, float n_z) : _Axis{n_x, n_y, n_z, 0.0f} {}
 
     friend std::ostream& operator << (std::ostream& os, const Axis& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -911,26 +820,15 @@ namespace pcl
     */
   struct PointNormal : public _PointNormal
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointNormal (const _PointNormal &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      normal_x = p.normal_x; normal_y = p.normal_y; normal_z = p.normal_z; data_n[3] = 0.0f;
-      curvature = p.curvature;
-    }
+    inline constexpr PointNormal (const _PointNormal &p) : PointNormal{p.x, p.y, p.z, p.normal_x, p.normal_y, p.normal_z, p.curvature} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointNormal (float _curvature = 0.f): PointNormal (0.f, 0.f, 0.f, 0.f, 0.f, 0.f, _curvature) {}
+    inline constexpr PointNormal (float _curvature = 0.f): PointNormal (0.f, 0.f, 0.f, 0.f, 0.f, 0.f, _curvature) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointNormal (float _x, float _y, float _z):
+    inline constexpr PointNormal (float _x, float _y, float _z):
       PointNormal (_x, _y, _z, 0.f, 0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointNormal (float _x, float _y, float _z, float n_x, float n_y, float n_z, float _curvature = 0.f)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      normal_x = n_x; normal_y = n_y; normal_z = n_z;
-      data_n[3] = 0.0f;
-      curvature = _curvature;
-    }
+    inline constexpr PointNormal (float _x, float _y, float _z, float n_x, float n_y, float n_z, float _curvature = 0.f) :
+      _PointNormal{{_x, _y, _z, 1.0f}, {n_x, n_y, n_z, 0.0f}, _curvature} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointNormal& p);
   };
@@ -985,37 +883,31 @@ namespace pcl
     */
   struct PointXYZRGBNormal : public _PointXYZRGBNormal
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBNormal (const _PointXYZRGBNormal &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      normal_x = p.normal_x; normal_y = p.normal_y; normal_z = p.normal_z; data_n[3] = 0.0f;
-      curvature = p.curvature;
-      rgba = p.rgba;
-    }
+    inline constexpr PointXYZRGBNormal (const _PointXYZRGBNormal &p) :
+      PointXYZRGBNormal {p.x, p.y, p.z, p.r, p.g, p.b, p.normal_x, p.normal_y, p.normal_z, p.curvature} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBNormal (float _curvature = 0.f):
+    inline constexpr PointXYZRGBNormal (float _curvature = 0.f):
         PointXYZRGBNormal (0.f, 0.f, 0.f, 0, 0, 0, 0.f, 0.f, 0.f, _curvature) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBNormal (float _x, float _y, float _z):
+    inline constexpr PointXYZRGBNormal (float _x, float _y, float _z):
       PointXYZRGBNormal (_x, _y, _z, 0, 0, 0) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBNormal (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
+    inline constexpr PointXYZRGBNormal (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
       PointXYZRGBNormal (0.f, 0.f, 0.f, _r, _g, _b) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBNormal (float _x, float _y, float _z, std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
+    inline constexpr PointXYZRGBNormal (float _x, float _y, float _z, std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
       PointXYZRGBNormal (_x, _y, _z, _r, _g, _b, 0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZRGBNormal (float _x, float _y, float _z, std::uint8_t _r, std::uint8_t _g, std::uint8_t _b,
-                              float n_x, float n_y, float n_z, float _curvature = 0.f)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      r = _r; g = _g; b = _b;
-      a = 255;
-      normal_x = n_x; normal_y = n_y; normal_z = n_z;
-      data_n[3] = 0.f;
-      curvature = _curvature;
-    }
+    inline constexpr PointXYZRGBNormal (float _x, float _y, float _z, std::uint8_t _r, std::uint8_t _g, std::uint8_t _b,
+                              float n_x, float n_y, float n_z, float _curvature = 0.f) :
+      _PointXYZRGBNormal{
+        {.data = {_x, _y, _z, 1.0f}}, 
+        {.data_n = {n_x, n_y, n_z, 0.0f}}, 
+        {.data_c = {static_cast<float>(_b), static_cast<float>(_g), static_cast<float>(_r), _curvature }}
+        //{.b = static_cast<float>(_b), .g = static_cast<float>(_g), .r = static_cast<float>(_r), .a = 255}, .curvature = _curvature }
+        //{ {.b = static_cast<float>(_b), .g = static_cast<float>(_g), .r = static_cast<float>(_r), .a = 255}, {.curvature = _curvature}}
+      }
+    {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGBNormal& p);
   };
@@ -1042,29 +934,22 @@ namespace pcl
     */
   struct PointXYZINormal : public _PointXYZINormal
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZINormal (const _PointXYZINormal &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      normal_x = p.normal_x; normal_y = p.normal_y; normal_z = p.normal_z; data_n[3] = 0.0f;
-      curvature = p.curvature;
-      intensity = p.intensity;
-    }
+    inline constexpr PointXYZINormal (const _PointXYZINormal &p) :
+      PointXYZINormal {p.x, p.y, p.z, p.intensity, p.normal_x, p.normal_y, p.normal_z, p.curvature} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZINormal (float _intensity = 0.f): PointXYZINormal (0.f, 0.f, 0.f, _intensity) {}
+    inline constexpr PointXYZINormal (float _intensity = 0.f): PointXYZINormal (0.f, 0.f, 0.f, _intensity) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZINormal (float _x, float _y, float _z, float _intensity = 0.f):
+    inline constexpr PointXYZINormal (float _x, float _y, float _z, float _intensity = 0.f):
       PointXYZINormal (_x, _y, _z, _intensity, 0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZINormal (float _x, float _y, float _z, float _intensity,
-                            float n_x, float n_y, float n_z, float _curvature = 0.f)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      intensity = _intensity;
-      normal_x = n_x; normal_y = n_y; normal_z = n_z;
-      data_n[3] = 0.f;
-      curvature = _curvature;
-    }
+    inline constexpr PointXYZINormal (float _x, float _y, float _z, float _intensity,
+                            float n_x, float n_y, float n_z, float _curvature = 0.f) :
+      _PointXYZINormal{
+        {.data = {_x, _y, _z, 1.0f}}, 
+        {.data_n = {n_x, n_y, n_z, 0.0f}}, 
+        {.data_c = {_intensity, _curvature, 0.0f, 0.0f}}
+      }
+    {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZINormal& p);
   };
@@ -1092,29 +977,22 @@ namespace pcl
     */
   struct PointXYZLNormal : public _PointXYZLNormal
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZLNormal (const _PointXYZLNormal &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      normal_x = p.normal_x; normal_y = p.normal_y; normal_z = p.normal_z; data_n[3] = 0.0f;
-      curvature = p.curvature;
-      label = p.label;
-    }
+    inline constexpr PointXYZLNormal (const _PointXYZLNormal &p) :
+      PointXYZLNormal {p.x, p.y, p.z, p.label, p.normal_x, p.normal_y, p.normal_z, p.curvature} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZLNormal (std::uint32_t _label = 0): PointXYZLNormal (0.f, 0.f, 0.f, _label) {}
+    inline constexpr PointXYZLNormal (std::uint32_t _label = 0u): PointXYZLNormal (0.f, 0.f, 0.f, _label) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZLNormal (float _x, float _y, float _z, std::uint32_t _label = 0.f):
+    inline constexpr PointXYZLNormal (float _x, float _y, float _z, std::uint32_t _label = 0u) :
       PointXYZLNormal (_x, _y, _z, _label, 0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointXYZLNormal (float _x, float _y, float _z, std::uint32_t _label,
-                            float n_x, float n_y, float n_z, float _curvature = 0.f)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      label = _label;
-      normal_x = n_x; normal_y = n_y; normal_z = n_z;
-      data_n[3] = 0.f;
-      curvature = _curvature;
-    }
+    inline constexpr PointXYZLNormal (float _x, float _y, float _z, std::uint32_t _label,
+                            float n_x, float n_y, float n_z, float _curvature = 0.f) :
+      _PointXYZLNormal{
+        {.data = {_x, _y, _z, 1.0f}}, 
+        {.data_n = {n_x, n_y, n_z, 0.0f}}, 
+        {.data_c = {static_cast<float>(_label), _curvature, 0.0f, 0.0f}}
+      }
+    {} 
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZLNormal& p);
   };
@@ -1142,20 +1020,12 @@ namespace pcl
     */
   struct PointWithRange : public _PointWithRange
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithRange (const _PointWithRange &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      range = p.range;
-    }
+    inline constexpr PointWithRange (const _PointWithRange &p) : PointWithRange{p.x, p.y, p.z, p.range} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithRange (float _range = 0.f): PointWithRange (0.f, 0.f, 0.f, _range) {}
+    inline constexpr PointWithRange (float _range = 0.f): PointWithRange (0.f, 0.f, 0.f, _range) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithRange (float _x, float _y, float _z, float _range = 0.f)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      range = _range;
-    }
+    inline constexpr PointWithRange (float _x, float _y, float _z, float _range = 0.f) :
+      _PointWithRange{{.data = {_x, _y, _z, 1.0f}}, {.data_c = {_range, 0.0f, 0.0f, 0.0f}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointWithRange& p);
   };
@@ -1183,22 +1053,14 @@ namespace pcl
     */
   struct EIGEN_ALIGN16 PointWithViewpoint : public _PointWithViewpoint
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithViewpoint (const _PointWithViewpoint &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      vp_x = p.vp_x; vp_y = p.vp_y; vp_z = p.vp_z;
-    }
+    inline constexpr PointWithViewpoint (const _PointWithViewpoint &p) : PointWithViewpoint{p.x, p.y, p.z, p.vp_x, p.vp_y, p.vp_z} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithViewpoint (): PointWithViewpoint (0.f, 0.f, 0.f) {}
+    inline constexpr PointWithViewpoint (): PointWithViewpoint (0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithViewpoint (float _x, float _y, float _z): PointWithViewpoint (_x, _y, _z, 0.f, 0.f, 0.f) {}
+    inline constexpr PointWithViewpoint (float _x, float _y, float _z): PointWithViewpoint (_x, _y, _z, 0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithViewpoint (float _x, float _y, float _z, float _vp_x, float _vp_y, float _vp_z)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      vp_x = _vp_x; vp_y = _vp_y; vp_z = _vp_z;
-    }
+    inline constexpr PointWithViewpoint (float _x, float _y, float _z, float _vp_x, float _vp_y, float _vp_z) :
+      _PointWithViewpoint{{.data = {_x, _y, _z, 1.0f}}, {.data_c = {_vp_x, _vp_y, _vp_z, 0.0f}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointWithViewpoint& p);
   };
@@ -1211,9 +1073,9 @@ namespace pcl
   {
     float j1 = 0.f, j2 = 0.f, j3 = 0.f;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR MomentInvariants () = default;
+    inline constexpr MomentInvariants () = default;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR MomentInvariants (float _j1, float _j2, float _j3): j1 (_j1), j2 (_j2), j3 (_j3) {}
+    inline constexpr MomentInvariants (float _j1, float _j2, float _j3): j1 (_j1), j2 (_j2), j3 (_j3) {}
 
     friend std::ostream& operator << (std::ostream& os, const MomentInvariants& p);
   };
@@ -1226,9 +1088,9 @@ namespace pcl
   {
     float r_min = 0.f, r_max = 0.f;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PrincipalRadiiRSD () = default;
+    inline constexpr PrincipalRadiiRSD () = default;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PrincipalRadiiRSD (float _r_min, float _r_max): r_min (_r_min), r_max (_r_max) {}
+    inline constexpr PrincipalRadiiRSD (float _r_min, float _r_max): r_min (_r_min), r_max (_r_max) {}
 
     friend std::ostream& operator << (std::ostream& os, const PrincipalRadiiRSD& p);
   };
@@ -1242,13 +1104,13 @@ namespace pcl
     std::uint8_t boundary_point = 0;
 
 #if defined(_LIBCPP_VERSION) && _LIBCPP_VERSION <= 1101
-    operator unsigned char() const
+    constexpr operator unsigned char() const
     {
       return boundary_point;
     }
 #endif
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Boundary (std::uint8_t _boundary = 0): boundary_point (_boundary) {}
+    inline constexpr Boundary (std::uint8_t _boundary = 0): boundary_point (_boundary) {}
 
     friend std::ostream& operator << (std::ostream& os, const Boundary& p);
   };
@@ -1272,13 +1134,13 @@ namespace pcl
     float pc1 = 0.f;
     float pc2 = 0.f;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PrincipalCurvatures (): PrincipalCurvatures (0.f, 0.f) {}
+    inline constexpr PrincipalCurvatures (): PrincipalCurvatures (0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PrincipalCurvatures (float _pc1, float _pc2): PrincipalCurvatures (0.f, 0.f, 0.f, _pc1, _pc2) {}
+    inline constexpr PrincipalCurvatures (float _pc1, float _pc2): PrincipalCurvatures (0.f, 0.f, 0.f, _pc1, _pc2) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PrincipalCurvatures (float _x, float _y, float _z): PrincipalCurvatures (_x, _y, _z, 0.f, 0.f) {}
+    inline constexpr PrincipalCurvatures (float _x, float _y, float _z): PrincipalCurvatures (_x, _y, _z, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PrincipalCurvatures (float _x, float _y, float _z, float _pc1, float _pc2):
+    inline constexpr PrincipalCurvatures (float _x, float _y, float _z, float _pc1, float _pc2):
       principal_curvature_x (_x), principal_curvature_y (_y), principal_curvature_z (_z), pc1 (_pc1), pc2 (_pc2) {}
 
     friend std::ostream& operator << (std::ostream& os, const PrincipalCurvatures& p);
@@ -1293,7 +1155,7 @@ namespace pcl
     float histogram[125] = {0.f};
     static constexpr int descriptorSize () { return 125; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PFHSignature125 () = default;
+    inline constexpr PFHSignature125 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const PFHSignature125& p);
   };
@@ -1307,7 +1169,7 @@ namespace pcl
     float histogram[250] = {0.f};
     static constexpr int descriptorSize () { return 250; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PFHRGBSignature250 () = default;
+    inline constexpr PFHRGBSignature250 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const PFHRGBSignature250& p);
   };
@@ -1321,9 +1183,9 @@ namespace pcl
     float f1 = 0.f, f2 = 0.f, f3 = 0.f, f4 = 0.f;
     float alpha_m = 0.f;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PPFSignature (float _alpha = 0.f): PPFSignature (0.f, 0.f, 0.f, 0.f, _alpha) {}
+    inline constexpr PPFSignature (float _alpha = 0.f): PPFSignature (0.f, 0.f, 0.f, 0.f, _alpha) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PPFSignature (float _f1, float _f2, float _f3, float _f4, float _alpha = 0.f):
+    inline constexpr PPFSignature (float _f1, float _f2, float _f3, float _f4, float _alpha = 0.f):
       f1 (_f1), f2 (_f2), f3 (_f3), f4 (_f4), alpha_m (_alpha) {}
 
     friend std::ostream& operator << (std::ostream& os, const PPFSignature& p);
@@ -1338,10 +1200,10 @@ namespace pcl
     float f1, f2, f3, f4, f5, f6, f7, f8, f9, f10;
     float alpha_m;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR CPPFSignature (float _alpha = 0.f):
+    inline constexpr CPPFSignature (float _alpha = 0.f):
       CPPFSignature (0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, _alpha) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR CPPFSignature (float _f1, float _f2, float _f3, float _f4, float _f5, float _f6,
+    inline constexpr CPPFSignature (float _f1, float _f2, float _f3, float _f4, float _f5, float _f6,
                           float _f7, float _f8, float _f9, float _f10, float _alpha = 0.f):
       f1 (_f1), f2 (_f2), f3 (_f3), f4 (_f4), f5 (_f5), f6 (_f6),
       f7 (_f7), f8 (_f8), f9 (_f9), f10 (_f10), alpha_m (_alpha) {}
@@ -1359,12 +1221,12 @@ namespace pcl
     float r_ratio = 0.f, g_ratio = 0.f, b_ratio = 0.f;
     float alpha_m = 0.f;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PPFRGBSignature (float _alpha = 0.f): PPFRGBSignature (0.f, 0.f, 0.f, 0.f, _alpha) {}
+    inline constexpr PPFRGBSignature (float _alpha = 0.f): PPFRGBSignature (0.f, 0.f, 0.f, 0.f, _alpha) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PPFRGBSignature (float _f1, float _f2, float _f3, float _f4, float _alpha = 0.f):
+    inline constexpr PPFRGBSignature (float _f1, float _f2, float _f3, float _f4, float _alpha = 0.f):
       PPFRGBSignature (_f1, _f2, _f3, _f4, _alpha, 0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PPFRGBSignature (float _f1, float _f2, float _f3, float _f4, float _alpha, float _r, float _g, float _b):
+    inline constexpr PPFRGBSignature (float _f1, float _f2, float _f3, float _f4, float _alpha, float _r, float _g, float _b):
       f1 (_f1), f2 (_f2), f3 (_f3), f4 (_f4), r_ratio (_r), g_ratio (_g), b_ratio (_b), alpha_m (_alpha) {}
 
     friend std::ostream& operator << (std::ostream& os, const PPFRGBSignature& p);
@@ -1379,7 +1241,7 @@ namespace pcl
   {
     float values[12] = {0.f};
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR NormalBasedSignature12 () = default;
+    inline constexpr NormalBasedSignature12 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const NormalBasedSignature12& p);
   };
@@ -1394,7 +1256,7 @@ namespace pcl
     float rf[9] = {0.f};
     static constexpr int descriptorSize () { return 1980; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR ShapeContext1980 () = default;
+    inline constexpr ShapeContext1980 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const ShapeContext1980& p);
   };
@@ -1409,7 +1271,7 @@ namespace pcl
     float rf[9] = {0.f};
     static constexpr int descriptorSize () { return 1960; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR UniqueShapeContext1960 () = default;
+    inline constexpr UniqueShapeContext1960 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const UniqueShapeContext1960& p);
   };
@@ -1424,7 +1286,7 @@ namespace pcl
     float rf[9] = {0.f};
     static constexpr int descriptorSize () { return 352; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR SHOT352 () = default;
+    inline constexpr SHOT352 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const SHOT352& p);
   };
@@ -1440,7 +1302,7 @@ namespace pcl
     float rf[9] = {0.f};
     static constexpr int descriptorSize () { return 1344; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR SHOT1344 () = default;
+    inline constexpr SHOT1344 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const SHOT1344& p);
   };
@@ -1477,19 +1339,23 @@ namespace pcl
   PCL_EXPORTS std::ostream& operator << (std::ostream& os, const ReferenceFrame& p);
   struct EIGEN_ALIGN16 ReferenceFrame : public _ReferenceFrame
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR ReferenceFrame (const _ReferenceFrame &p)
+    inline constexpr ReferenceFrame (const _ReferenceFrame &p) :
+      //ReferenceFrame{p.rf[0], p.rf[1], p.rf[2], p.rf[3], p.rf[4], p.rf[5], p.rf[6], p.rf[7], p.rf[8] }
+      ReferenceFrame{p.rf}
     {
-      std::copy_n(p.rf, 9, rf);
+      //std::copy_n(p.rf, 9, rf); // this algorithm is constexpr starting from C++20
     }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR ReferenceFrame ()
+    inline constexpr ReferenceFrame () :
+      ReferenceFrame{ {.rf = {} }}
     {
-      std::fill_n(x_axis, 3, 0.f);
+      /*std::fill_n(x_axis, 3, 0.f);
       std::fill_n(y_axis, 3, 0.f);
-      std::fill_n(z_axis, 3, 0.f);
+      std::fill_n(z_axis, 3, 0.f);*/
     }
 
-    // @TODO: add other ctors
+    inline constexpr ReferenceFrame (const float* _rf) :
+      _ReferenceFrame{{.rf = {_rf[0], _rf[1], _rf[2], _rf[3], _rf[4], _rf[5], _rf[6], _rf[7], _rf[8]} }} {}
 
     friend std::ostream& operator << (std::ostream& os, const ReferenceFrame& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -1505,7 +1371,7 @@ namespace pcl
     float histogram[33] = {0.f};
     static constexpr int descriptorSize () { return 33; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR FPFHSignature33 () = default;
+    inline constexpr FPFHSignature33 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const FPFHSignature33& p);
   };
@@ -1519,7 +1385,7 @@ namespace pcl
     float histogram[308] = {0.f};
     static constexpr int descriptorSize () { return 308; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR VFHSignature308 () = default;
+    inline constexpr VFHSignature308 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const VFHSignature308& p);
   };
@@ -1533,7 +1399,7 @@ namespace pcl
     float histogram[21] = {0.f};
     static constexpr int descriptorSize () { return 21; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR GRSDSignature21 () = default;
+    inline constexpr GRSDSignature21 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const GRSDSignature21& p);
   };
@@ -1549,9 +1415,9 @@ namespace pcl
     unsigned char descriptor[64] = {0};
     static constexpr int descriptorSize () { return 64; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR BRISKSignature512 () = default;
+    inline constexpr BRISKSignature512 () = default;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR BRISKSignature512 (float _scale, float _orientation): scale (_scale), orientation (_orientation) {}
+    inline constexpr BRISKSignature512 (float _scale, float _orientation): scale (_scale), orientation (_orientation) {}
 
     friend std::ostream& operator << (std::ostream& os, const BRISKSignature512& p);
   };
@@ -1565,7 +1431,7 @@ namespace pcl
     float histogram[640] = {0.f};
     static constexpr int descriptorSize () { return 640; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR ESFSignature640 () = default;
+    inline constexpr ESFSignature640 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const ESFSignature640& p);
   };
@@ -1579,7 +1445,7 @@ namespace pcl
     float histogram[512] = {0.f};
     static constexpr int descriptorSize() { return 512; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR GASDSignature512 () = default;
+    inline constexpr GASDSignature512 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const GASDSignature512& p);
   };
@@ -1593,7 +1459,7 @@ namespace pcl
     float histogram[984] = {0.f};
     static constexpr int descriptorSize() { return 984; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR GASDSignature984 () = default;
+    inline constexpr GASDSignature984 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const GASDSignature984& p);
   };
@@ -1607,7 +1473,7 @@ namespace pcl
     float histogram[7992] = {0.f};
     static constexpr int descriptorSize() { return 7992; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR GASDSignature7992 () = default;
+    inline constexpr GASDSignature7992 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const GASDSignature7992& p);
   };
@@ -1621,7 +1487,7 @@ namespace pcl
     float histogram[16] = {0.f};
     static constexpr int descriptorSize () { return 16; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR GFPFHSignature16 () = default;
+    inline constexpr GFPFHSignature16 () = default;
 
     friend std::ostream& operator << (std::ostream& os, const GFPFHSignature16& p);
   };
@@ -1636,11 +1502,11 @@ namespace pcl
     float descriptor[36] = {0.f};
     static constexpr int descriptorSize () { return 36; }
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Narf36 () = default;
+    inline constexpr Narf36 () = default;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Narf36 (float _x, float _y, float _z): Narf36 (_x, _y, _z, 0.f, 0.f, 0.f) {}
+    inline constexpr Narf36 (float _x, float _y, float _z): Narf36 (_x, _y, _z, 0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR Narf36 (float _x, float _y, float _z, float _roll, float _pitch, float _yaw):
+    inline constexpr Narf36 (float _x, float _y, float _z, float _roll, float _pitch, float _yaw):
       x (_x), y (_y), z (_z), roll (_roll), pitch (_pitch), yaw (_yaw) {}
 
     friend std::ostream& operator << (std::ostream& os, const Narf36& p);
@@ -1656,9 +1522,9 @@ namespace pcl
     BorderTraits traits;
     //std::vector<const BorderDescription*> neighbors;
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR BorderDescription () = default;
+    inline constexpr BorderDescription () = default;
 
-    // TODO: provide other ctors
+    inline constexpr BorderDescription (int _x, int _y) : x(_x), y(_y) {}
 
     friend std::ostream& operator << (std::ostream& os, const BorderDescription& p);
   };
@@ -1681,9 +1547,9 @@ namespace pcl
       };
     };
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR IntensityGradient (): IntensityGradient (0.f, 0.f, 0.f) {}
+    inline constexpr IntensityGradient (): IntensityGradient (0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR IntensityGradient (float _x, float _y, float _z): gradient_x (_x), gradient_y (_y), gradient_z (_z) {}
+    inline constexpr IntensityGradient (float _x, float _y, float _z): gradient_x (_x), gradient_y (_y), gradient_z (_z) {}
 
     friend std::ostream& operator << (std::ostream& os, const IntensityGradient& p);
   };
@@ -1726,28 +1592,15 @@ namespace pcl
     */
   struct PointWithScale : public _PointWithScale
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithScale (const _PointWithScale &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      scale = p.scale;
-      angle = p.angle;
-      response = p.response;
-      octave = p.octave;
-    }
+    inline constexpr PointWithScale (const _PointWithScale &p) :
+      PointWithScale{p.x, p.y, p.z, p.scale, p.angle, p.response, p.octave} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithScale (): PointWithScale (0.f, 0.f, 0.f) {}
+    inline constexpr PointWithScale (): PointWithScale (0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointWithScale (float _x, float _y, float _z, float _scale = 1.f,
-                           float _angle = -1.f, float _response = 0.f, int _octave = 0)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      scale = _scale;
-      angle = _angle;
-      response = _response;
-      octave = _octave;
-    }
-
+    inline constexpr PointWithScale (float _x, float _y, float _z, float _scale = 1.f,
+                           float _angle = -1.f, float _response = 0.f, int _octave = 0) :
+      _PointWithScale{{.data = {_x, _y, _z, 1.0f}}, .scale = _scale, .angle = _angle, .response = _response, .octave = _octave } {}
+    
     friend std::ostream& operator << (std::ostream& os, const PointWithScale& p);
   };
 
@@ -1777,29 +1630,25 @@ namespace pcl
     */
   struct PointSurfel : public _PointSurfel
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointSurfel (const _PointSurfel &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      rgba = p.rgba;
-      radius = p.radius;
-      confidence = p.confidence;
-      curvature = p.curvature;
-    }
+    inline constexpr PointSurfel (const _PointSurfel &p) :
+      PointSurfel{p.x, p.y, p.z, p.normal_x, p.normal_y, p.normal_z, p.rgba, p.radius, p.confidence, p.curvature} {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointSurfel ()
+    inline constexpr PointSurfel () :
+      PointSurfel{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0u, 0.0f, 0.0f, 0.0f}
     {
       //defaultInitialize<PointXYZ>();
       //defaultInitialize<Normal>();
       //defaultInitialize<PointRGBA>();
-      x = y = z = 0.0f;
-      //data[3] = 1.0f;
-      normal_x = normal_y = normal_z /*= data_n[3]*/ = 0.0f;
-      r = g = b = 0;
-      a = 255;
-      radius = confidence = curvature = 0.0f;
     }
 
-    // TODO: add other ctor to PointSurfel
+    inline constexpr PointSurfel (float _x, float _y, float _z, float _nx,
+                           float _ny, float _nz, std::uint32_t _rgba, 
+                           float _radius, float _confidence, float _curvature) :
+      _PointSurfel{
+        {.data = {_x, _y, _z, 1.0f}}, 
+        {.data_n = {_nx, _ny, _nz, 0.0f}}, 
+        {.data_c = {static_cast<float>(_rgba), _radius, _confidence, _curvature}}
+      } {}
 
     friend std::ostream& operator << (std::ostream& os, const PointSurfel& p);
   };
@@ -1819,28 +1668,17 @@ namespace pcl
     */
   struct PointDEM : public _PointDEM
   {
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointDEM (const _PointDEM &p)
-    {
-      x = p.x; y = p.y; z = p.z; data[3] = 1.0f;
-      intensity = p.intensity;
-      intensity_variance = p.intensity_variance;
-      height_variance = p.height_variance;
-    }
+    inline constexpr PointDEM (const _PointDEM &p) :
+      PointDEM{p.x, p.y, p.z, p.intensity, p.intensity_variance, p.height_variance} {}
+    
+    inline constexpr PointDEM (): PointDEM (0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointDEM (): PointDEM (0.f, 0.f, 0.f) {}
+    inline constexpr PointDEM (float _x, float _y, float _z): PointDEM (_x, _y, _z, 0.f, 0.f, 0.f) {}
 
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointDEM (float _x, float _y, float _z): PointDEM (_x, _y, _z, 0.f, 0.f, 0.f) {}
-
-    inline PCL_MAYBE_CONSTEXPR_CTOR PointDEM (float _x, float _y, float _z, float _intensity,
-                     float _intensity_variance, float _height_variance)
-    {
-      x = _x; y = _y; z = _z;
-      data[3] = 1.0f;
-      intensity = _intensity;
-      intensity_variance = _intensity_variance;
-      height_variance = _height_variance;
-    }
-
+    inline constexpr PointDEM (float _x, float _y, float _z, float _intensity,
+                     float _intensity_variance, float _height_variance) :
+      _PointDEM{{.data = {_x, _y, _z, 1.0f}}, .intensity = _intensity, .intensity_variance = _intensity_variance, .height_variance = _height_variance} {}
+    
     friend std::ostream& operator << (std::ostream& os, const PointDEM& p);
   };
 
