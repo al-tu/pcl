@@ -11,16 +11,14 @@
 #include <pcl/pcl_tests.h>
 #include <pcl/point_types.h>
 
-#include <gmock/gmock.h>
-
 using namespace pcl;
 using namespace pcl::test;
 
-template <typename PointT>
+/*template <typename PointT>
 bool isDataMemberDefault(PointT &&p)
 {
   return p.data[0] == 0.0f && p.data[1] == 0.0f && p.data[2] == 0.0f && p.data[3] == 1.0f;
-}
+}*/
 
 template <typename T> class PointTypeConstexprConstructorTest : public testing::Test { };
 
