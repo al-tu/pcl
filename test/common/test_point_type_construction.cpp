@@ -147,7 +147,7 @@ TEST (PointTypeConstruction, PointXYZRGBADefaultConstruction)
   static_assert(pt.r == 0u, "");
   static_assert(pt.g == 0u, "");
   static_assert(pt.b == 0u, "");
-  static_assert(pt.a == 0u, "");
+  static_assert(pt.a == 255u, "");
 }
 
 TEST (PointTypeConstruction, PointXYZRGBASevenScalarsConstruction)
