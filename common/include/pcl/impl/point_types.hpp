@@ -349,7 +349,7 @@ namespace pcl
 
     inline constexpr PointXYZ (): PointXYZ(0.f, 0.f, 0.f) {}
 
-    inline constexpr PointXYZ (float _x, float _y, float _z) : _PointXYZ{{_x, _y, _z, 1.f}} {}
+    inline constexpr PointXYZ (float _x, float _y, float _z) : _PointXYZ{{{_x, _y, _z, 1.f}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZ& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -390,7 +390,7 @@ namespace pcl
 
     inline constexpr RGB (): RGB(0, 0, 0) {}
 
-    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a = 255) : _RGB{_b, _g, _r, _a} {}
+    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a = 255) : _RGB{{_b, _g, _r, _a}} {}
 
     friend std::ostream& operator << (std::ostream& os, const RGB& p);
   };
@@ -480,11 +480,11 @@ namespace pcl
   PCL_EXPORTS std::ostream& operator << (std::ostream& os, const PointXYZI& p);
   struct PointXYZI : public _PointXYZI
   {
-    inline constexpr PointXYZI (const _PointXYZI &p) : _PointXYZI{{p.x, p.y, p.z, 1.0f}, p.intensity} {}
+    inline constexpr PointXYZI (const _PointXYZI &p) : PointXYZI{p.x, p.y, p.z, p.intensity} {}
 
     inline constexpr PointXYZI (float _intensity = 0.f) : PointXYZI(0.f, 0.f, 0.f, _intensity) {}
 
-    inline constexpr PointXYZI (float _x, float _y, float _z, float _intensity = 0.f) : _PointXYZI{{_x, _y, _z, 1.0f}, _intensity} {}
+    inline constexpr PointXYZI (float _x, float _y, float _z, float _intensity = 0.f) : _PointXYZI{{{_x, _y, _z, 1.0f}}, {_intensity}} {}
     
     friend std::ostream& operator << (std::ostream& os, const PointXYZI& p);
   };
@@ -500,11 +500,11 @@ namespace pcl
   PCL_EXPORTS std::ostream& operator << (std::ostream& os, const PointXYZL& p);
   struct PointXYZL : public _PointXYZL
   {
-    inline constexpr PointXYZL (const _PointXYZL &p) : _PointXYZL{{p.x, p.y, p.z, 1.0f}, p.label} {}
+    inline constexpr PointXYZL (const _PointXYZL &p) : PointXYZL{p.x, p.y, p.z, p.label} {}
 
     inline constexpr PointXYZL (std::uint32_t _label = 0) : PointXYZL(0.f, 0.f, 0.f, _label) {}
 
-    inline constexpr PointXYZL (float _x, float _y, float _z, std::uint32_t _label = 0) : _PointXYZL{{.data = {_x, _y, _z, 1.0f}}, label = _label} {}
+    inline constexpr PointXYZL (float _x, float _y, float _z, std::uint32_t _label = 0) : _PointXYZL{{.data = {_x, _y, _z, 1.0f}}, .label = _label} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZL& p);
   };
@@ -562,7 +562,7 @@ namespace pcl
       PointXYZRGBA (_x, _y, _z, 0, 0, 0, 255) {}
 
     inline constexpr PointXYZRGBA (float _x, float _y, float _z, std::uint8_t _r,
-                         std::uint8_t _g, std::uint8_t _b, std::uint8_t _a) : _PointXYZRGBA{{_x, _y, _z, 1.0f}, {_b, _g, _r, _a}} {}
+                         std::uint8_t _g, std::uint8_t _b, std::uint8_t _a) : _PointXYZRGBA{{{_x, _y, _z, 1.0f}}, {{_b, _g, _r, _a}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGBA& p);
   };
@@ -629,7 +629,7 @@ namespace pcl
 
     inline constexpr PointXYZRGB (float _x, float _y, float _z,
                          std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
-      _PointXYZRGB{{_x, _y, _z, 1.0f}, {_b, _g, _r, 255}} {}
+      _PointXYZRGB{{{_x, _y, _z, 1.0f}}, {{_b, _g, _r, 255}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGB& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -653,7 +653,7 @@ namespace pcl
     inline constexpr PointXYZRGBL (float _x, float _y, float _z,
                          std::uint8_t _r, std::uint8_t _g, std::uint8_t _b,
                          std::uint32_t _label = 0) :
-      _PointXYZRGBL{{_x, _y, _z, 1.0f}, {_b, _g, _r, 255}, _label} {}
+      _PointXYZRGBL{{{_x, _y, _z, 1.0f}}, {{_b, _g, _r, 255}}, _label} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGBL& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -1392,7 +1392,7 @@ namespace pcl
     }
 
     inline constexpr ReferenceFrame () :
-      ReferenceFrame{ {.rf = {} }}
+      ReferenceFrame{ {.rf = {0.0f} }}
     {
       /*std::fill_n(x_axis, 3, 0.f);
       std::fill_n(y_axis, 3, 0.f);
@@ -1644,7 +1644,7 @@ namespace pcl
 
     inline constexpr PointWithScale (float _x, float _y, float _z, float _scale = 1.f,
                            float _angle = -1.f, float _response = 0.f, int _octave = 0) :
-      _PointWithScale{{.data = {_x, _y, _z, 1.0f}}, .scale = _scale, .angle = _angle, .response = _response, .octave = _octave } {}
+      _PointWithScale{{.data = {_x, _y, _z, 1.0f}}, {.scale = _scale}, .angle = _angle, .response = _response, .octave = _octave } {}
     
     friend std::ostream& operator << (std::ostream& os, const PointWithScale& p);
   };

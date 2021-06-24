@@ -449,7 +449,7 @@ aligned_free(void* ptr)
 //#else
 //  #define PCL_MAYBE_CONSTEXPR_CTOR 
 //#endif
-#define PCL_MAYBE_CONSTEXPR_CTOR 
+#define PCL_MAYBE_CONSTEXPR_CTOR
 
 
 #ifdef __cpp_if_constexpr
