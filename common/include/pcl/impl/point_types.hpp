@@ -562,7 +562,7 @@ namespace pcl
       PointXYZRGBA (_x, _y, _z, 0, 0, 0, 255) {}
 
     inline constexpr PointXYZRGBA (float _x, float _y, float _z, std::uint8_t _r,
-                         std::uint8_t _g, std::uint8_t _b, std::uint8_t _a) : _PointXYZRGBA{{{_x, _y, _z, 1.0f}}, {{_b, _g, _r, _a}}} {}
+                         std::uint8_t _g, std::uint8_t _b, std::uint8_t _a) : _PointXYZRGBA{{{_x, _y, _z, 1.0f}}, {{{_b, _g, _r, _a}}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGBA& p);
   };
@@ -629,7 +629,7 @@ namespace pcl
 
     inline constexpr PointXYZRGB (float _x, float _y, float _z,
                          std::uint8_t _r, std::uint8_t _g, std::uint8_t _b):
-      _PointXYZRGB{{{_x, _y, _z, 1.0f}}, {{_b, _g, _r, 255}}} {}
+      _PointXYZRGB{{{_x, _y, _z, 1.0f}}, {{{_b, _g, _r, 255}}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGB& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -653,7 +653,7 @@ namespace pcl
     inline constexpr PointXYZRGBL (float _x, float _y, float _z,
                          std::uint8_t _r, std::uint8_t _g, std::uint8_t _b,
                          std::uint32_t _label = 0) :
-      _PointXYZRGBL{{{_x, _y, _z, 1.0f}}, {{_b, _g, _r, 255}}, _label} {}
+      _PointXYZRGBL{{{_x, _y, _z, 1.0f}}, {{{_b, _g, _r, 255}}}, _label} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZRGBL& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -836,7 +836,7 @@ namespace pcl
 
     inline constexpr Axis (): Axis (0.f, 0.f, 0.f) {}
 
-    inline constexpr Axis (float n_x, float n_y, float n_z) : _Axis{n_x, n_y, n_z, 0.0f} {}
+    inline constexpr Axis (float n_x, float n_y, float n_z) : _Axis{{{n_x, n_y, n_z, 0.0f}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const Axis& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -872,7 +872,7 @@ namespace pcl
       PointNormal (_x, _y, _z, 0.f, 0.f, 0.f, 0.f) {}
 
     inline constexpr PointNormal (float _x, float _y, float _z, float n_x, float n_y, float n_z, float _curvature = 0.f) :
-      _PointNormal{{_x, _y, _z, 1.0f}, {n_x, n_y, n_z, 0.0f}, _curvature} {}
+      _PointNormal{{{_x, _y, _z, 1.0f}}, {{n_x, n_y, n_z, 0.0f}}, {_curvature}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointNormal& p);
   };
