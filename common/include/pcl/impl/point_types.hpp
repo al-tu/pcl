@@ -390,7 +390,7 @@ namespace pcl
 
     inline constexpr RGB (): RGB(0, 0, 0) {}
 
-    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a = 255) : _RGB{{{_b, _g, _r, _a}}} {}
+    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a = 255) : _RGB{{{{_b, _g, _r, _a}}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const RGB& p);
   };
@@ -872,7 +872,7 @@ namespace pcl
       PointNormal (_x, _y, _z, 0.f, 0.f, 0.f, 0.f) {}
 
     inline constexpr PointNormal (float _x, float _y, float _z, float n_x, float n_y, float n_z, float _curvature = 0.f) :
-      _PointNormal{{{_x, _y, _z, 1.0f}}, {{n_x, n_y, n_z, 0.0f}}, {_curvature}} {}
+      _PointNormal{{{_x, _y, _z, 1.0f}}, {{n_x, n_y, n_z, 0.0f}}, {{_curvature}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointNormal& p);
   };
