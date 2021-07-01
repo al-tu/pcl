@@ -390,7 +390,7 @@ namespace pcl
 
     inline constexpr RGB (): RGB(0, 0, 0) {}
 
-    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a = 255) : _RGB{{_b, _g, _r, _a}} {}
+    inline constexpr RGB (std::uint8_t _r, std::uint8_t _g, std::uint8_t _b, std::uint8_t _a = 255) : _RGB{{{_b, _g, _r, _a}}} {}
 
     friend std::ostream& operator << (std::ostream& os, const RGB& p);
   };
@@ -484,7 +484,7 @@ namespace pcl
 
     inline constexpr PointXYZI (float _intensity = 0.f) : PointXYZI(0.f, 0.f, 0.f, _intensity) {}
 
-    inline constexpr PointXYZI (float _x, float _y, float _z, float _intensity = 0.f) : _PointXYZI{{{_x, _y, _z, 1.0f}}, {_intensity}} {}
+    inline constexpr PointXYZI (float _x, float _y, float _z, float _intensity = 0.f) : _PointXYZI{{{_x, _y, _z, 1.0f}}, {{_intensity}}} {}
     
     friend std::ostream& operator << (std::ostream& os, const PointXYZI& p);
   };
@@ -504,7 +504,7 @@ namespace pcl
 
     inline constexpr PointXYZL (std::uint32_t _label = 0) : PointXYZL(0.f, 0.f, 0.f, _label) {}
 
-    inline constexpr PointXYZL (float _x, float _y, float _z, std::uint32_t _label = 0) : _PointXYZL{{.data = {_x, _y, _z, 1.0f}}, .label = _label} {}
+    inline constexpr PointXYZL (float _x, float _y, float _z, std::uint32_t _label = 0) : _PointXYZL{{{_x, _y, _z, 1.0f}}, _label} {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZL& p);
   };
@@ -1644,7 +1644,7 @@ namespace pcl
 
     inline constexpr PointWithScale (float _x, float _y, float _z, float _scale = 1.f,
                            float _angle = -1.f, float _response = 0.f, int _octave = 0) :
-      _PointWithScale{{.data = {_x, _y, _z, 1.0f}}, {.scale = _scale}, .angle = _angle, .response = _response, .octave = _octave } {}
+      _PointWithScale{{{_x, _y, _z, 1.0f}}, {_scale}, _angle, _response, _octave } {}
     
     friend std::ostream& operator << (std::ostream& os, const PointWithScale& p);
   };
@@ -1722,7 +1722,7 @@ namespace pcl
 
     inline constexpr PointDEM (float _x, float _y, float _z, float _intensity,
                      float _intensity_variance, float _height_variance) :
-      _PointDEM{{.data = {_x, _y, _z, 1.0f}}, .intensity = _intensity, .intensity_variance = _intensity_variance, .height_variance = _height_variance} {}
+      _PointDEM{{{_x, _y, _z, 1.0f}}, _intensity, _intensity_variance, _height_variance} {}
     
     friend std::ostream& operator << (std::ostream& os, const PointDEM& p);
   };
