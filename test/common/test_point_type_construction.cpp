@@ -610,18 +610,15 @@ TEST (PointTypeConstruction, ReferenceFrameArrayOfScalarsConstruction)
   static_assert(pt.rf[8] == values[8], "");
 }
 
-template <size_t N>
-constexpr bool all_are_zero(const float(&)[N])
-
 // TODO
-TEST (PointTypeConstruction, FPFHSignature33DefaultConstruction)
+/*TEST (PointTypeConstruction, FPFHSignature33DefaultConstruction)
 {
   constexpr const pcl::FPFHSignature33 pt;
   for (auto i{0u}; i < 33u; ++i)
   {
     static_assert(pt.histogram[i] == 0.0f, "");
   }
-}
+}*/
 
 // TODO compile-time for-looped check
 TEST (PointTypeConstruction, VFHSignature308DefaultConstruction)

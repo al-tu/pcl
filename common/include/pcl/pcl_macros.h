@@ -443,13 +443,13 @@ aligned_free(void* ptr)
   #define PCL_NODISCARD
 #endif
 
-// put 'real' conditions here for compilers that happen to work well with union issues 
-//#if (__cplusplus >= 201703L)
-//  #define PCL_MAYBE_CONSTEXPR_CTOR constexpr
-//#else
-//  #define PCL_MAYBE_CONSTEXPR_CTOR 
-//#endif
-#define PCL_MAYBE_CONSTEXPR_CTOR
+// MSVC:
+// error C7555: use of designated initializers requires at least '/std:c++latest'
+#if defined(_MSC_VER)
+  #define PCL_CONSTEXPR_CTOR
+#else
+  #define PCL_CONSTEXPR_CTOR constexpr
+#endif
 
 
 #ifdef __cpp_if_constexpr
