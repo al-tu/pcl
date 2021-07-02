@@ -1385,15 +1385,15 @@ namespace pcl
   struct EIGEN_ALIGN16 ReferenceFrame : public _ReferenceFrame
   {
     inline constexpr ReferenceFrame (const _ReferenceFrame &p) :
-      //ReferenceFrame{p.rf[0], p.rf[1], p.rf[2], p.rf[3], p.rf[4], p.rf[5], p.rf[6], p.rf[7], p.rf[8] }
       ReferenceFrame{p.rf}
     {
       //std::copy_n(p.rf, 9, rf); // this algorithm is constexpr starting from C++20
     }
 
     inline constexpr ReferenceFrame () :
-      ReferenceFrame{ {.rf = {0.0f} }}
+      _ReferenceFrame{ {.rf = {0.0f} }}
     {
+      // this algorithm is constexpr starting from C++20
       /*std::fill_n(x_axis, 3, 0.f);
       std::fill_n(y_axis, 3, 0.f);
       std::fill_n(z_axis, 3, 0.f);*/

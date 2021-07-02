@@ -610,68 +610,65 @@ TEST (PointTypeConstruction, ReferenceFrameArrayOfScalarsConstruction)
   static_assert(pt.rf[8] == values[8], "");
 }
 
+template <size_t N>
+constexpr bool all_are_zero(const float(&)[N])
+
 // TODO
 TEST (PointTypeConstruction, FPFHSignature33DefaultConstruction)
 {
   constexpr const pcl::FPFHSignature33 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  for (auto i{0u}; i < 33u; ++i)
+  {
+    static_assert(pt.histogram[i] == 0.0f, "");
+  }
 }
 
-// TODO
+// TODO compile-time for-looped check
 TEST (PointTypeConstruction, VFHSignature308DefaultConstruction)
 {
-  constexpr const pcl::VFHSignature308 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  //constexpr const pcl::VFHSignature308 pt;
 }
 
-// TODO
+// TODO compile-time for-looped check
 TEST (PointTypeConstruction, GRSDSignature21DefaultConstruction)
 {
-  constexpr const pcl::GRSDSignature21 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  //constexpr const pcl::GRSDSignature21 pt;
 }
 
-// TODO
+// TODO compile-time for-looped check
 TEST (PointTypeConstruction, BRISKSignature512DefaultConstruction)
 {
-  constexpr const pcl::BRISKSignature512 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  //constexpr const pcl::BRISKSignature512 pt;
 }
 
-// TODO
+// TODO compile-time for-looped check
 TEST (PointTypeConstruction, ESFSignature640DefaultConstruction)
 {
-  constexpr const pcl::ESFSignature640 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  //constexpr const pcl::ESFSignature640 pt;
 }
 
-
-// TODO
+// TODO compile-time for-looped check
 TEST (PointTypeConstruction, GASDSignature512DefaultConstruction)
 {
-  constexpr const pcl::GASDSignature512 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  //constexpr const pcl::GASDSignature512 pt;
 }
 
-// TODO
+// TODO compile-time for-looped check
 TEST (PointTypeConstruction, GASDSignature984DefaultConstruction)
 {
-  constexpr const pcl::GASDSignature984 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  //constexpr const pcl::GASDSignature984 pt;
 }
 
-// TODO
+// TODO compile-time for-looped check
 TEST (PointTypeConstruction, GASDSignature7992DefaultConstruction)
 {
-  constexpr const pcl::GASDSignature7992 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  //constexpr const pcl::GASDSignature7992 pt;
 }
 
-// TODO
+// TODO compile-time for-looped check
 TEST (PointTypeConstruction, GFPFHSignature16DefaultConstruction)
 {
-  constexpr const pcl::GFPFHSignature16 pt;
-  //static_assert(pt.histogram == 0.0f, ""); // std::all_of or use std::index_sequence?
+  //constexpr const pcl::GFPFHSignature16 pt;
 }
 
 TEST (PointTypeConstruction, Narf36DefaultConstruction)
