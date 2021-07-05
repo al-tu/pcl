@@ -122,7 +122,6 @@ TYPED_TEST_SUITE (PointTypeConstexprConstructorTest, AllPointTypes);
 TYPED_TEST (PointTypeConstexprConstructorTest, ConstexprDefaultConstructionTests)
 {
   static_assert(std::is_default_constructible<TypeParam>::value, "");
-  constexpr const TypeParam pt;
 }
 
 TEST (PointTypeConstruction, LabelDefaultConstruction)
