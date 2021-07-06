@@ -949,7 +949,7 @@ namespace pcl
         {{n_x, n_y, n_z, 0.0f}}, 
         //{.data_c = {static_cast<float>(_b), static_cast<float>(_g), static_cast<float>(_r), _curvature }}
         //{.b = static_cast<float>(_b), .g = static_cast<float>(_g), .r = static_cast<float>(_r), .a = 255}, .curvature = _curvature }
-        { {{_b, _g, _r, 255u}, _curvature} }
+        { {{{_b, _g, _r, 255u}}, _curvature} }
       }
     {}
 
