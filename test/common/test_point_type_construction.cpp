@@ -374,10 +374,11 @@ TEST (PointTypeConstruction, PointXYZRGBNormalDefaultConstruction)
   static_assert(pt.data_n[1] == 0.0f, "");
   static_assert(pt.data_n[2] == 0.0f, "");
   static_assert(pt.data_n[3] == 0.0f, "");
-  static_assert(pt.data_c[0] == 0.0f, "");
-  static_assert(pt.data_c[1] == 0.0f, "");
-  static_assert(pt.data_c[2] == 0.0f, "");
-  static_assert(pt.data_c[3] == 0.0f, "");
+  static_assert(pt.r == 0u, "");
+  static_assert(pt.g == 0u, "");
+  static_assert(pt.b == 0u, "");
+  static_assert(pt.a == 255u, "");
+  static_assert(pt.curvature == 0.0f, "");
 }
 
 TEST (PointTypeConstruction, PointXYZRGBNormalTenScalarsConstruction)
@@ -391,10 +392,10 @@ TEST (PointTypeConstruction, PointXYZRGBNormalTenScalarsConstruction)
   static_assert(pt.data_n[1] == 9.0f, "");
   static_assert(pt.data_n[2] == 10.0f, "");
   static_assert(pt.data_n[3] == 0.0f, "");
-  static_assert(pt.data_c[0] == 7.0f, "");
-  static_assert(pt.data_c[1] == 6.0f, "");
-  static_assert(pt.data_c[2] == 5.0f, "");
-  static_assert(pt.data_c[3] == 11.0f, "");
+  static_assert(pt.r == 5u, "");
+  static_assert(pt.g == 6u, "");
+  static_assert(pt.b == 7u, "");
+  static_assert(pt.curvature == 11.0f, "");
 }
 
 TEST (PointTypeConstruction, PointXYZINormalDefaultConstruction)

@@ -688,7 +688,7 @@ namespace pcl
 
     inline PCL_CONSTEXPR_CTOR PointXYZLAB (float _x, float _y, float _z,
                         float _L, float _a, float _b) :
-      _PointXYZLAB{ {.data = {_x, _y, _z, 1.0f}}, {.data_lab = {_L, _a, _b, 0.0f}}} {}
+      _PointXYZLAB{ {.data = {_x, _y, _z, 1.0f}}, {.data_lab = {_L, _a, _b, 0.0f}} } {}
 
     friend std::ostream& operator << (std::ostream& os, const PointXYZLAB& p);
     PCL_MAKE_ALIGNED_OPERATOR_NEW
@@ -945,11 +945,11 @@ namespace pcl
     inline PCL_CONSTEXPR_CTOR PointXYZRGBNormal (float _x, float _y, float _z, std::uint8_t _r, std::uint8_t _g, std::uint8_t _b,
                               float n_x, float n_y, float n_z, float _curvature = 0.f) :
       _PointXYZRGBNormal{
-        {.data = {_x, _y, _z, 1.0f}}, 
-        {.data_n = {n_x, n_y, n_z, 0.0f}}, 
-        {.data_c = {static_cast<float>(_b), static_cast<float>(_g), static_cast<float>(_r), _curvature }}
+        {{_x, _y, _z, 1.0f}}, 
+        {{n_x, n_y, n_z, 0.0f}}, 
+        //{.data_c = {static_cast<float>(_b), static_cast<float>(_g), static_cast<float>(_r), _curvature }}
         //{.b = static_cast<float>(_b), .g = static_cast<float>(_g), .r = static_cast<float>(_r), .a = 255}, .curvature = _curvature }
-        //{ {.b = static_cast<float>(_b), .g = static_cast<float>(_g), .r = static_cast<float>(_r), .a = 255}, {.curvature = _curvature}}
+        { {{_b, _g, _r, 255u}, _curvature} }
       }
     {}
 
