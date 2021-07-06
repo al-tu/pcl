@@ -445,4 +445,17 @@ namespace pcl
     out.width = width_;
     out.height = height_;
   }
+
+  inline constexpr int PackRGB(std::uint8_t r, std::uint8_t g, std::uint8_t b)
+  {
+    return static_cast<int>((int)r << 16 | (int)g << 8 | (int)b);
+  }
+
+  inline constexpr std::tuple<std::uint8_t, std::uint8_t, std::uint8_t> UnpackRGB(int rgb_)
+  {
+    return std::make_tuple(
+      static_cast<std::uint8_t>((rgb_ >> 16) & 0x0000ff),
+      static_cast<std::uint8_t>((rgb_ >> 8) & 0x0000ff),
+      static_cast<std::uint8_t>((rgb_) & 0x0000ff));
+  }
 }

@@ -82,6 +82,20 @@ TEST (PointTypeConversions, PointXYZRGBtoPointXYZHSV)
   EXPECT_NEAR (hsv.v, 0.980392, 1e-2);
 }
 
+TEST (PointTypeConversions, RGBPacking)
+{
+  std::uint8_t r = 127u; 
+  std::uint8_t g = 64u;
+  std::uint8_t b = 254u;
+  const auto rgb = pcl::PackRGB(r, g, b);
+  EXPECT_EQ (rgb, 0xff7f40fe);      // alpha is 255
+
+  std::tie(r, g, b) = pcl::UnpackRGB(rgb);
+  EXPECT_EQ(r, 127u);
+  EXPECT_EQ(g, 64u);
+  EXPECT_EQ(b, 254u);
+}
+
 int
 main (int argc, char** argv)
 {
